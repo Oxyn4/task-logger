@@ -54,6 +54,25 @@ def save_text():
 def popup(e):
     rcmenu.tk_popup(e.x_root, e.y_root)
 
+def settingswindow():
+    settingsroot = tk.Tk()
+    settingsroot.title("settings")
+    settingsroot.geometry("500x500")
+
+    colour_text = tk.Entry(settingsroot, width=20, borderwidth=5)
+    colour_text.grid(row=1, column=0, columnspan=3, padx=10, pady=10)
+
+    colour_text_label = tk.Label(settingsroot, text="choose your text colour:")
+    colour_text_label.grid(row=0, column=0)
+
+
+
+
+
+
+
+    settingsroot.mainloop 
+
 # * files 
 
 filemenu = tk.Menu(menubar)
@@ -64,6 +83,7 @@ filemenu.add_command(label="save as text file", command=save_text)
 
 settingsmenu = tk.Menu(menubar)
 menubar.add_cascade(label="settings", menu=settingsmenu)
+settingsmenu.add_command(label="settings", command=settingswindow)
 
 
 # * right click menu
