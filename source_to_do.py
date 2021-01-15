@@ -1,4 +1,3 @@
-from os import remove
 from tkinter import *
 from tkinter import ttk as ttk
 import tkinter as tk
@@ -9,7 +8,7 @@ import tkinter as tk
 # * here the window is defined standard boiler plate
 
 root = tk.Tk()
-root.title("To do...")
+root.title("Task Logger")
 root.geometry("495x276")
 
 # * here is the addition of the task in this function
@@ -20,12 +19,15 @@ def comfirm():
     task = taskentry.get()
     taskentry.delete(0, 10000000)
   
-    taskholder.insert(parent="", index="end", iid=len(arr), text="", values=(len(arr), task))
+    taskholder.insert(parent="", index="end", iid=len(arr), text="", values=(len(arr), "• " +task))
 
     arr.append(task)
 
 def remove():
-    pass
+    taskfordeletion = taskholder.selection()[0]
+    taskholder.delete(taskfordeletion)
+    print(taskfordeletion)
+    arr.pop(int(taskfordeletion))
 
 # * gui / buttons / entry box / treeview
 
