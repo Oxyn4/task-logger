@@ -70,6 +70,11 @@ helpmenu = tk.Menu(menubar)
 menubar.add_cascade(label="help", menu=helpmenu)
 helpmenu.add_command(label="Documentation", command=opendocs)
 
+# * settings menu
+
+settingsmenu = tk.Menu(menubar)
+menubar.add_cascade(label="settings", menu=settingsmenu)
+
 # * right click menu
 
 rcmenu = tk.Menu(root, tearoff=False)
