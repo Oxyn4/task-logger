@@ -60,6 +60,12 @@ filemenu = tk.Menu(menubar)
 menubar.add_cascade(label="file", menu=filemenu)
 filemenu.add_command(label="save as text file", command=save_text)
 
+# * settings menu
+
+settingsmenu = tk.Menu(menubar)
+menubar.add_cascade(label="settings", menu=settingsmenu)
+
+
 # * right click menu
 
 rcmenu = tk.Menu(root, tearoff=False)
