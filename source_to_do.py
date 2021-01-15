@@ -1,3 +1,4 @@
+from os import remove
 from tkinter import *
 from tkinter import ttk as ttk
 import tkinter as tk
@@ -9,7 +10,7 @@ import tkinter as tk
 
 root = tk.Tk()
 root.title("To do...")
-root.geometry("489x500")
+root.geometry("495x276")
 
 # * here is the addition of the task in this function
 
@@ -22,6 +23,9 @@ def comfirm():
     taskholder.insert(parent="", index="end", iid=len(arr), text="", values=(len(arr), task))
 
     arr.append(task)
+
+def remove():
+    pass
 
 # * gui / buttons / entry box / treeview
 
@@ -36,11 +40,14 @@ taskholder.heading("Task", text="Task:", anchor=CENTER)
 
 taskholder.place(x="0", y="0")
 
-taskentry = tk.Entry(root, width="41")
-taskentry.place(x="0", y="475")
+taskentry = tk.Entry(root, width="61")
+taskentry.place(x="0", y="252")
 
-taskcomfirm = tk.Button(root, command=comfirm, text="add task", width="15", height="1")
-taskcomfirm.place(x="336", y="469")
+taskcomfirm = tk.Button(root, command=comfirm, text="add task", width="25", height="1")
+taskcomfirm.place(x="270", y="221")
+
+taskremove = tk.Button(root, command=remove, text="remove selected task", width="25", height="1")
+taskremove.place(x="0", y="221")
 
 # * toolbar creation
 
