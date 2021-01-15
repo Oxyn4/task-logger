@@ -55,6 +55,9 @@ def save_text():
 def popup(e):
     rcmenu.tk_popup(e.x_root, e.y_root)    
 
+def opendocs():
+    pass
+
 # * files 
 
 filemenu = tk.Menu(menubar)
