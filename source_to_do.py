@@ -1,8 +1,5 @@
+from tkinter import *
 import tkinter as tk
-
-# ! dependencies part of this project
-
-import menubar_to_do as mb
 
 # TODO: upload to github repo / store tasks in a database / improve ui, fix measurements / add a settings area
 
@@ -22,13 +19,13 @@ def comfirm():
 
     length = len(taskarray)
     
-    taskholder.insert(length, "•" + task)
+    taskholder.insert(length, "• " + task)
 
     taskarray.append(task)
 
 # * gui / buttons / entry box / listbox
 
-taskholder = tk.Listbox(root, width=60, height=25)
+taskholder = tk.Listbox(root, width=60, height=25, font="lsbfont")
 taskholder.place(y=0, x=0)
 
 taskentry = tk.Entry(root, width="41")
@@ -37,10 +34,22 @@ taskentry.place(x="0", y="475")
 taskcomfirm = tk.Button(root, command=comfirm, text="add task", width="15", height="1")
 taskcomfirm.place(x="336", y="469")
 
-# * toolbar
+# * toolbar creation
 
-mb.rootmenubar()
+menubar = tk.Menu(root)
+root.config(menu=menubar)
 
-# * standard tkinter boiler plate
+# * menu commands
+
+def save_text():
+    None
+
+# * files 
+
+filemenu = tk.Menu(menubar)
+menubar.add_cascade(label="file", menu=filemenu)
+filemenu.add_command(label="save as text file", command=save_text)
+
+# * boilerplate
 
 root.mainloop()
