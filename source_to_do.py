@@ -67,6 +67,11 @@ def popup(e):
 def opendocs():
     pass
 
+def keydelete(e):
+    selec = taskholder.selection()[0]
+    taskholder.delete(selec)
+    arr.pop(int(selec))
+
 # * files 
 
 filemenu = tk.Menu(menubar)
@@ -89,7 +94,12 @@ menubar.add_cascade(label="settings", menu=settingsmenu)
 rcmenu = tk.Menu(root, tearoff=False)
 rcmenu.add_command(label="save as text file", command=save_text)
 
+# * keybinds
+
+root.bind("<Delete>", keydelete)
 root.bind("<Button-3>", popup)
+
+root.bind("<BackSpace>", keydelete)
 
 # * boilerplate
 
