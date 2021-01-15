@@ -1,5 +1,9 @@
 import tkinter as tk
 
+# ! dependencies part of this project
+
+import menubar_to_do as mb
+
 # TODO: upload to github repo / store tasks in a database / improve ui, fix measurements / add a settings area
 
 # * here the window is defined standard boiler plate
@@ -32,6 +36,10 @@ taskentry.place(x="0", y="475")
 
 taskcomfirm = tk.Button(root, command=comfirm, text="add task", width="15", height="1")
 taskcomfirm.place(x="336", y="469")
+
+# * toolbar
+
+mb.rootmenubar()
 
 # * standard tkinter boiler plate
 
