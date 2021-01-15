@@ -2,7 +2,8 @@ from tkinter import *
 from tkinter import ttk as ttk
 import tkinter as tk
 
-# TODO: upload to github repo / store tasks in a database / improve ui, fix measurements / add a settings area 
+# TODO: upload to github repo / store tasks in a dat file / improve ui, fix measurements / need to add settings to mentubar 
+# TODO: remove task feature
 
 # * here the window is defined standard boiler plate
 
@@ -28,7 +29,7 @@ taskholder = ttk.Treeview(root)
 taskholder["columns"] = ("ID", "Task")
 taskholder.column("#0", width=0, minwidth=25)
 taskholder.column("ID", anchor=W, width=30)
-taskholder.column("Task", anchor=CENTER, width=150)
+taskholder.column("Task", anchor=CENTER, width=470)
 taskholder.heading("#0", text="", anchor=W)
 taskholder.heading("ID", text="ID:", anchor=W)
 taskholder.heading("Task", text="Task:", anchor=CENTER)
@@ -52,13 +53,19 @@ def save_text():
     None
 
 def popup(e):
-    rcmenu.tk_popup(e.x_root, e.y_root)
+    rcmenu.tk_popup(e.x_root, e.y_root)    
 
 # * files 
 
 filemenu = tk.Menu(menubar)
 menubar.add_cascade(label="file", menu=filemenu)
 filemenu.add_command(label="save as text file", command=save_text)
+
+# * help 
+
+helpmenu = tk.Menu(menubar)
+menubar.add_cascade(label="help", menu=helpmenu)
+helpmenu.add_command(label="Documentation", command=opendocs)
 
 # * right click menu
 
