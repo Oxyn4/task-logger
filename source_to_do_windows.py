@@ -3,8 +3,6 @@ from tkinter import ttk as ttk
 from tkinter import filedialog
 import tkinter as tk
 
-
-
 # TODO: upload to github repo / store tasks in a database / improve ui, fix measurements / add a settings area 
 # TODO: store tasks in a dat file / improve ui, fix measurements / need to add settings to mentubar 
 # TODO: remove task feature
@@ -12,8 +10,7 @@ import tkinter as tk
 # * here the window is defined standard boiler plate
 
 root = tk.Tk()
-root.geometry("495x276")
-root.title("Task Logger - New File ")
+root.geometry("530x273")
 
 # * here is the addition of the task in this function
 
@@ -46,14 +43,16 @@ taskholder.heading("Task", text="Task:", anchor=CENTER)
 
 taskholder.place(x="0", y="0")
 
-taskentry = tk.Entry(root, width="61")
+
+taskentry = tk.Entry(root, width="83")
 taskentry.place(x="0", y="252")
 
-taskcomfirm = tk.Button(root, command=lambda: comfirm(0), text="add task", width="25", height="1")
-taskcomfirm.place(x="270", y="221")
+taskcomfirm = tk.Button(root, command=lambda: comfirm(0), text="add task", width="37", height="1")
+taskcomfirm.place(x="234", y="227")
 
-taskremove = tk.Button(root, command=remove, text="remove selected task", width="25", height="1")
-taskremove.place(x="0", y="221")
+taskremove = tk.Button(root, command=remove, text="remove selected task", width="37", height="1")
+taskremove.place(x="0", y="227")
+
 
 # * toolbar creation
 
@@ -79,8 +78,8 @@ def save_as_text(e):
     for items in arr:
         file_to_be_saved.write(str(items) + "\n")
         
-
     file_to_be_saved.close()
+
     
 
 def popup(e):
@@ -91,6 +90,9 @@ def open_file():
 
     importedfile = tk.filedialog.askopenfilename(initialdir="~/Documents", title="Open File", filetypes=[("Text Files", "*.txt")])
     file = importedfile
+
+    titlestatus = file
+    
     root.title(f'Task logger - {file}' )   
 
     file2 = open(file, 'r')
@@ -104,6 +106,47 @@ def open_file():
         line = file2.readline() 
         linecount += 0
         arr.append(line)
+
+def help_adding_removing(): # ! here 
+
+    helproot = tk.Tk()
+    helproot.title("Help - adding and removing tasks")
+    helproot.geometry("400x150")
+
+    adding_removing_label = tk.Label(helproot, text="to add a task:").grid(row=0, column=0)
+    
+    adding_removing_label2 = tk.Label(helproot, text="step1: enter a task into the task entry box below the buttons.").grid(row=1, column=0)
+    
+    adding_removing_label3 = tk.Label(helproot, text="step2: press the 'add task' button or use the 'enter' key.").grid(row=2, column=0)
+
+    adding_removing_label4 = tk.Label(helproot, text="to remove a task:").grid(row=3, column=0)
+
+    adding_removing_label5 = tk.Label(helproot, text="step 1: click on the task you wish to remove").grid(row=4, column=0)
+
+    adding_removing_label6 = tk.Label(helproot, text="step 2: press the 'remove task' button or when unwanted task is selected").grid(row=5, column=0)
+
+
+
+    helproot.mainloop()
+
+def help_shortcuts():
+    helproot2 = tk.Tk()
+    helproot2.title("help - shortcuts")
+    helproot2.geometry("450x130")
+
+    help_shortcuts = tk.Label(helproot2, text="shortcuts:").grid(row=0, column=0)
+
+    help_shortcuts2 = tk.Label(helproot2, text="'delete' key removes a selected task").grid(row=1, column=0)
+
+    help_shortcuts3 = tk.Label(helproot2, text="'backspace' key removes a selected task or text getting typed in the task entry box").grid(row=2, column=0)
+
+    help_shortcuts4 = tk.Label(helproot2, text="'ctrl' + 's' key combination saves the file you are on").grid(row=3, column=0)
+
+    help_shortcuts5 = tk.Label(helproot2, text="'return' key submits the text enterd into the task entry bar as a task").grid(row=4, column=0)
+
+    help_shortcuts2 = tk.Label(helproot2, text="'right click' on the mouse for a pop up with options").grid(row=5, column=0)
+
+    helproot2.mainloop()
 
 def openhelpdocs():
     pass
@@ -148,7 +191,8 @@ filemenu.add_command(label="Open text file", command=open_file)
 
 helpmenu = tk.Menu(menubar, tearoff=False)
 menubar.add_cascade(label="help", menu=helpmenu)
-helpmenu.add_command(label="Documentation", command=openhelpdocs)
+helpmenu.add_command(label="Adding and removing task", command=help_adding_removing) # ! HERE
+helpmenu.add_command(label="shortcuts", command=help_shortcuts)
 
 # * settings menu
 
@@ -161,14 +205,15 @@ settingsmenu.add_command(label="settings", command=settingswindow)
 rcmenu = tk.Menu(root, tearoff=False)
 rcmenu.add_command(label="save as text file", command=save_as_text)
 
+
 # * keybinds
 
 root.bind("<Delete>", keydelete)
 root.bind("<Button-3>", popup)
 root.bind("<BackSpace>", keydelete)
 root.bind("<Return>", comfirm)
-root.bind("<Control-s>", save_as_text)
 root.bind("<Control-o>", open_file)
+root.bind("<Control-s>", save_as_text)
 
 # * boilerplate
 
