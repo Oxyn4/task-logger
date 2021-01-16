@@ -3,6 +3,9 @@ from tkinter import ttk as ttk
 from tkinter import filedialog
 import tkinter as tk
 
+
+
+# TODO: upload to github repo / store tasks in a database / improve ui, fix measurements / add a settings area 
 # TODO: store tasks in a dat file / improve ui, fix measurements / need to add settings to mentubar 
 # TODO: remove task feature
 
@@ -89,6 +92,29 @@ def keydelete(e):
     taskholder.delete(selec)
     arr.pop(int(selec))
 
+def settingswindow():
+    settingsroot = tk.Tk()
+    settingsroot.title("settings")
+    settingsroot.geometry("260x250")
+
+    r = IntVar()
+
+    theme_selection = tk.Label(settingsroot, text="choose your theme:")
+    theme_selection.grid(row=0, column=1)
+
+    Radiobutton(settingsroot, text="dark", variable=r, value=1).grid(column=0, row=1)
+    Radiobutton(settingsroot, text="light", variable=r, value=2).grid(column=1, row=1)
+    Radiobutton(settingsroot, text="blue", variable=r, value=3).grid(column=2, row=1)
+
+    theme_selection = tk.Label(settingsroot, text="choose your font size:")
+    theme_selection.grid(row=4, column=1)
+
+    Radiobutton(settingsroot, text="Small", variable=r, value=1).grid(column=0, row=5)
+    Radiobutton(settingsroot, text="Medium", variable=r, value=2).grid(column=1, row=5)
+    Radiobutton(settingsroot, text="Large", variable=r, value=3).grid(column=2, row=5)
+
+    settingsroot.mainloop()
+
 # * files 
 
 filemenu = tk.Menu(menubar, tearoff=False)
@@ -107,6 +133,7 @@ helpmenu.add_command(label="Documentation", command=openhelpdocs)
 
 settingsmenu = tk.Menu(menubar, tearoff=False)
 menubar.add_cascade(label="settings", menu=settingsmenu)
+settingsmenu.add_command(label="settings", command=settingswindow)
 
 # * right click menu
 
