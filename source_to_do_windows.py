@@ -13,11 +13,9 @@ import tkinter as tk
 
 root = tk.Tk()
 root.geometry("495x276")
+root.title("Task Logger - New File ")
 
 # * here is the addition of the task in this function
-
-global titlestatus
-titlestatus = "New file"
 
 arr = []
 
@@ -70,8 +68,19 @@ def new_list():
         arr.clear()
         titlestatus = "New file"
 
-def save_text(e):
-    pass
+def save_as_text(e):
+    file_to_be_saved = tk.filedialog.asksaveasfilename(defaultextension=".txt", initialdir="This PC/Documents", title="Save File", filetypes=[("Text Files", "*,txt")])
+    if file_to_be_saved:
+        name = file_to_be_saved
+        root.title(f'Task logger - {file_to_be_saved}' )  
+
+    file_to_be_saved = open(file_to_be_saved, "w")
+
+    for items in arr:
+        file_to_be_saved.write(str(items) + "\n")
+        
+
+    file_to_be_saved.close()
     
 
 def popup(e):
@@ -82,7 +91,19 @@ def open_file():
 
     importedfile = tk.filedialog.askopenfilename(initialdir="~/Documents", title="Open File", filetypes=[("Text Files", "*.txt")])
     file = importedfile
-    titlestatus = file
+    root.title(f'Task logger - {file}' )   
+
+    file2 = open(file, 'r')
+    line = file2.readline() 
+    linecount = 0
+
+    while line:    
+        print(line)
+
+        taskholder.insert(parent="", index="end", iid=len(arr), text="", values=(len(arr), "• " + line))
+        line = file2.readline() 
+        linecount += 0
+        arr.append(line)
 
 def openhelpdocs():
     pass
@@ -120,7 +141,7 @@ def settingswindow():
 filemenu = tk.Menu(menubar, tearoff=False)
 menubar.add_cascade(label="file", menu=filemenu)
 filemenu.add_command(label="New list", command=new_list)
-filemenu.add_command(label="Save as text file", command=save_text)
+filemenu.add_command(label="Save as text file", command=save_as_text)
 filemenu.add_command(label="Open text file", command=open_file)
 
 # * help 
@@ -138,7 +159,7 @@ settingsmenu.add_command(label="settings", command=settingswindow)
 # * right click menu
 
 rcmenu = tk.Menu(root, tearoff=False)
-rcmenu.add_command(label="save as text file", command=save_text)
+rcmenu.add_command(label="save as text file", command=save_as_text)
 
 # * keybinds
 
@@ -146,9 +167,9 @@ root.bind("<Delete>", keydelete)
 root.bind("<Button-3>", popup)
 root.bind("<BackSpace>", keydelete)
 root.bind("<Return>", comfirm)
-root.bind("<Control-s>", save_text)
+root.bind("<Control-s>", save_as_text)
+root.bind("<Control-o>", open_file)
 
 # * boilerplate
 
-root.title("Task Logger - " + titlestatus)
 root.mainloop()
