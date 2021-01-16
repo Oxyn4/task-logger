@@ -12,7 +12,7 @@ import tkinter as tk
 # * here the window is defined standard boiler plate
 
 root = tk.Tk()
-root.geometry("495x276")
+root.geometry("530x273")
 
 # * here is the addition of the task in this function
 
@@ -48,14 +48,14 @@ taskholder.heading("Task", text="Task:", anchor=CENTER)
 
 taskholder.place(x="0", y="0")
 
-taskentry = tk.Entry(root, width="61")
+taskentry = tk.Entry(root, width="83")
 taskentry.place(x="0", y="252")
 
-taskcomfirm = tk.Button(root, command=lambda: comfirm(0), text="add task", width="25", height="1")
-taskcomfirm.place(x="270", y="221")
+taskcomfirm = tk.Button(root, command=lambda: comfirm(0), text="add task", width="37", height="1")
+taskcomfirm.place(x="234", y="227")
 
-taskremove = tk.Button(root, command=remove, text="remove selected task", width="25", height="1")
-taskremove.place(x="0", y="221")
+taskremove = tk.Button(root, command=remove, text="remove selected task", width="37", height="1")
+taskremove.place(x="0", y="227")
 
 # * toolbar creation
 
