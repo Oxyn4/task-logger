@@ -84,8 +84,47 @@ def open_file():
     file = importedfile
     titlestatus = file
 
-def openhelpdocs():
-    pass
+def help_adding_removing(): # ! here 
+
+    helproot = tk.Tk()
+    helproot.title("Help - adding and removing tasks")
+    helproot.geometry("400x150")
+
+    adding_removing_label = tk.Label(helproot, text="to add a task:").grid(row=0, column=0)
+    
+    adding_removing_label2 = tk.Label(helproot, text="step1: enter a task into the task entry box below the buttons.").grid(row=1, column=0)
+    
+    adding_removing_label3 = tk.Label(helproot, text="step2: press the 'add task' button or use the 'enter' key.").grid(row=2, column=0)
+
+    adding_removing_label4 = tk.Label(helproot, text="to remove a task:").grid(row=3, column=0)
+
+    adding_removing_label5 = tk.Label(helproot, text="step 1: click on the task you wish to remove").grid(row=4, column=0)
+
+    adding_removing_label6 = tk.Label(helproot, text="step 2: press the 'remove task' button or when unwanted task is selected").grid(row=5, column=0)
+
+
+
+    helproot.mainloop()
+
+def help_shortcuts():
+    helproot2 = tk.Tk()
+    helproot2.title("help - shortcuts")
+    helproot2.geometry("450x130")
+
+    help_shortcuts = tk.Label(helproot2, text="shortcuts:").grid(row=0, column=0)
+
+    help_shortcuts2 = tk.Label(helproot2, text="'delete' key removes a selected task").grid(row=1, column=0)
+
+    help_shortcuts3 = tk.Label(helproot2, text="'backspace' key removes a selected task or text getting typed in the task entry box").grid(row=2, column=0)
+
+    help_shortcuts4 = tk.Label(helproot2, text="'ctrl' + 's' key combination saves the file you are on").grid(row=3, column=0)
+
+    help_shortcuts5 = tk.Label(helproot2, text="'return' key submits the text enterd into the task entry bar as a task").grid(row=4, column=0)
+
+    help_shortcuts2 = tk.Label(helproot2, text="'right click' on the mouse for a pop up with options").grid(row=5, column=0)
+
+    helproot2.mainloop()
+
 
 def keydelete(e):
     selec = taskholder.selection()[0]
@@ -127,7 +166,10 @@ filemenu.add_command(label="Open text file", command=open_file)
 
 helpmenu = tk.Menu(menubar, tearoff=False)
 menubar.add_cascade(label="help", menu=helpmenu)
-helpmenu.add_command(label="Documentation", command=openhelpdocs)
+helpmenu.add_command(label="Adding and removing task", command=help_adding_removing) # ! HERE
+
+helpmenu.add_command(label="shortcuts", command=help_shortcuts)
+
 
 # * settings menu
 
