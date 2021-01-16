@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk as ttk
 import tkinter as tk
 
+
 # TODO: upload to github repo / store tasks in a database / improve ui, fix measurements / add a settings area 
 
 # * here the window is defined standard boiler plate
@@ -57,21 +58,25 @@ def popup(e):
 def settingswindow():
     settingsroot = tk.Tk()
     settingsroot.title("settings")
-    settingsroot.geometry("500x500")
+    settingsroot.geometry("260x250")
 
-    colour_text = tk.Entry(settingsroot, width=20, borderwidth=5)
-    colour_text.grid(row=1, column=0, columnspan=3, padx=10, pady=10)
+    r = IntVar()
 
-    colour_text_label = tk.Label(settingsroot, text="choose your text colour:")
-    colour_text_label.grid(row=0, column=0)
+    theme_selection = tk.Label(settingsroot, text="choose your theme:")
+    theme_selection.grid(row=0, column=1)
 
+    Radiobutton(settingsroot, text="dark", variable=r, value=1).grid(column=0, row=1)
+    Radiobutton(settingsroot, text="light", variable=r, value=2).grid(column=1, row=1)
+    Radiobutton(settingsroot, text="blue", variable=r, value=3).grid(column=2, row=1)
 
+    theme_selection = tk.Label(settingsroot, text="choose your font size:")
+    theme_selection.grid(row=4, column=1)
 
+    Radiobutton(settingsroot, text="Small", variable=r, value=1).grid(column=0, row=5)
+    Radiobutton(settingsroot, text="Medium", variable=r, value=2).grid(column=1, row=5)
+    Radiobutton(settingsroot, text="Large", variable=r, value=3).grid(column=2, row=5)
 
-
-
-
-    settingsroot.mainloop 
+    settingsroot.mainloop()
 
 # * files 
 
