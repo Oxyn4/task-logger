@@ -3,8 +3,6 @@ from tkinter import ttk as ttk
 from tkinter import filedialog
 import tkinter as tk
 
-
-
 # TODO: upload to github repo / store tasks in a database / improve ui, fix measurements / add a settings area 
 # TODO: store tasks in a dat file / improve ui, fix measurements / need to add settings to mentubar 
 # TODO: remove task feature
@@ -13,17 +11,16 @@ import tkinter as tk
 
 root = tk.Tk()
 root.geometry("495x276")
+root.title("Task Logger - New file")
 
 # * here is the addition of the task in this function
-
-global titlestatus
-titlestatus = "New file"
 
 arr = []
 
 def comfirm(e):
     task = taskentry.get()
     taskentry.delete(0, 10000000)
+
   
     taskholder.insert(parent="", index="end", iid=len(arr), text="", values=(len(arr), "• " + task))
 
@@ -45,7 +42,6 @@ taskholder.column("Task", anchor=CENTER, width=470)
 taskholder.heading("#0", text="", anchor=W)
 taskholder.heading("ID", text="ID:", anchor=W)
 taskholder.heading("Task", text="Task:", anchor=CENTER)
-
 taskholder.place(x="0", y="0")
 
 taskentry = tk.Entry(root, width="61")
@@ -68,11 +64,24 @@ def new_list():
     for record in taskholder.get_children():
         taskholder.delete(record)
         arr.clear()
-        titlestatus = "New file"
+        titlestatus = "New file"  
+        root.title('Task logger - New File')
 
-def save_text(e):
-    pass
-    
+
+def save_as_text(e):
+    file_to_be_saved = tk.filedialog.asksaveasfilename(defaultextension=".txt", initialdir="~/Documents", title="Save File", filetypes=[("Text Files", "*,txt")])
+    if file_to_be_saved:
+        name = file_to_be_saved
+        root.title(f'Task logger - {file_to_be_saved}' )  
+
+    file_to_be_saved = open(file_to_be_saved, "w")
+
+    for items in arr:
+        file_to_be_saved.write(str(items) + "\n")
+        
+
+    file_to_be_saved.close()   
+
 
 def popup(e):
     rcmenu.tk_popup(e.x_root, e.y_root) 
@@ -82,9 +91,21 @@ def open_file():
 
     importedfile = tk.filedialog.askopenfilename(initialdir="~/Documents", title="Open File", filetypes=[("Text Files", "*.txt")])
     file = importedfile
-    titlestatus = file
+    root.title(f'Task logger - {file}' )   
 
-def help_adding_removing(): # ! here 
+    file2 = open(file, 'r')
+    line = file2.readline() 
+    linecount = 0
+
+    while line:    
+        print(line)
+
+        taskholder.insert(parent="", index="end", iid=len(arr), text="", values=(len(arr), "• " + line))
+        line = file2.readline() 
+        linecount += 0
+        arr.append(line)
+    
+def help_adding_removing():
 
     helproot = tk.Tk()
     helproot.title("Help - adding and removing tasks")
@@ -101,8 +122,6 @@ def help_adding_removing(): # ! here
     adding_removing_label5 = tk.Label(helproot, text="step 1: click on the task you wish to remove").grid(row=4, column=0)
 
     adding_removing_label6 = tk.Label(helproot, text="step 2: press the 'remove task' button or when unwanted task is selected").grid(row=5, column=0)
-
-
 
     helproot.mainloop()
 
@@ -166,8 +185,9 @@ filemenu.add_command(label="Open text file", command=open_file)
 helpmenu = tk.Menu(menubar, tearoff=False)
 menubar.add_cascade(label="help", menu=helpmenu)
 helpmenu.add_command(label="Adding and removing task", command=help_adding_removing) 
-
 helpmenu.add_command(label="shortcuts", command=help_shortcuts)
+filemenu.add_command(label="Save as text file", command=lambda: save_as_text(0))
+filemenu.add_command(label="Open text file", command=open_file)
 
 # * settings menu
 
@@ -178,7 +198,7 @@ settingsmenu.add_command(label="settings", command=settingswindow)
 # * right click menu
 
 rcmenu = tk.Menu(root, tearoff=False)
-rcmenu.add_command(label="save as text file", command=save_text)
+rcmenu.add_command(label="save as text file", command=lambda: save_as_text(0))
 
 # * keybinds
 
@@ -186,9 +206,9 @@ root.bind("<Delete>", keydelete)
 root.bind("<Button-3>", popup)
 root.bind("<BackSpace>", keydelete)
 root.bind("<Return>", comfirm)
+root.bind("<Control-o>", open_file)
 root.bind("<Control-s>", save_text)
 
 # * boilerplate
 
-root.title("Task Logger - " + titlestatus)
 root.mainloop()

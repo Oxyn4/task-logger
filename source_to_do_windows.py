@@ -3,8 +3,6 @@ from tkinter import ttk as ttk
 from tkinter import filedialog
 import tkinter as tk
 
-
-
 # TODO: upload to github repo / store tasks in a database / improve ui, fix measurements / add a settings area 
 # TODO: store tasks in a dat file / improve ui, fix measurements / need to add settings to mentubar 
 # TODO: remove task feature
@@ -15,9 +13,6 @@ root = tk.Tk()
 root.geometry("530x273")
 
 # * here is the addition of the task in this function
-
-global titlestatus
-titlestatus = "New file"
 
 arr = []
 
@@ -48,6 +43,7 @@ taskholder.heading("Task", text="Task:", anchor=CENTER)
 
 taskholder.place(x="0", y="0")
 
+
 taskentry = tk.Entry(root, width="83")
 taskentry.place(x="0", y="252")
 
@@ -56,6 +52,7 @@ taskcomfirm.place(x="234", y="227")
 
 taskremove = tk.Button(root, command=remove, text="remove selected task", width="37", height="1")
 taskremove.place(x="0", y="227")
+
 
 # * toolbar creation
 
@@ -70,8 +67,19 @@ def new_list():
         arr.clear()
         titlestatus = "New file"
 
-def save_text(e):
-    pass
+def save_as_text(e):
+    file_to_be_saved = tk.filedialog.asksaveasfilename(defaultextension=".txt", initialdir="This PC/Documents", title="Save File", filetypes=[("Text Files", "*,txt")])
+    if file_to_be_saved:
+        name = file_to_be_saved
+        root.title(f'Task logger - {file_to_be_saved}' )  
+
+    file_to_be_saved = open(file_to_be_saved, "w")
+
+    for items in arr:
+        file_to_be_saved.write(str(items) + "\n")
+        
+    file_to_be_saved.close()
+
     
 
 def popup(e):
@@ -82,7 +90,22 @@ def open_file():
 
     importedfile = tk.filedialog.askopenfilename(initialdir="~/Documents", title="Open File", filetypes=[("Text Files", "*.txt")])
     file = importedfile
+
     titlestatus = file
+    
+    root.title(f'Task logger - {file}' )   
+
+    file2 = open(file, 'r')
+    line = file2.readline() 
+    linecount = 0
+
+    while line:    
+        print(line)
+
+        taskholder.insert(parent="", index="end", iid=len(arr), text="", values=(len(arr), "• " + line))
+        line = file2.readline() 
+        linecount += 0
+        arr.append(line)
 
 def help_adding_removing(): # ! here 
 
@@ -125,6 +148,8 @@ def help_shortcuts():
 
     helproot2.mainloop()
 
+def openhelpdocs():
+    pass
 
 def keydelete(e):
     selec = taskholder.selection()[0]
@@ -159,7 +184,7 @@ def settingswindow():
 filemenu = tk.Menu(menubar, tearoff=False)
 menubar.add_cascade(label="file", menu=filemenu)
 filemenu.add_command(label="New list", command=new_list)
-filemenu.add_command(label="Save as text file", command=save_text)
+filemenu.add_command(label="Save as text file", command=save_as_text)
 filemenu.add_command(label="Open text file", command=open_file)
 
 # * help 
@@ -167,9 +192,7 @@ filemenu.add_command(label="Open text file", command=open_file)
 helpmenu = tk.Menu(menubar, tearoff=False)
 menubar.add_cascade(label="help", menu=helpmenu)
 helpmenu.add_command(label="Adding and removing task", command=help_adding_removing) # ! HERE
-
 helpmenu.add_command(label="shortcuts", command=help_shortcuts)
-
 
 # * settings menu
 
@@ -180,7 +203,8 @@ settingsmenu.add_command(label="settings", command=settingswindow)
 # * right click menu
 
 rcmenu = tk.Menu(root, tearoff=False)
-rcmenu.add_command(label="save as text file", command=save_text)
+rcmenu.add_command(label="save as text file", command=save_as_text)
+
 
 # * keybinds
 
@@ -188,9 +212,9 @@ root.bind("<Delete>", keydelete)
 root.bind("<Button-3>", popup)
 root.bind("<BackSpace>", keydelete)
 root.bind("<Return>", comfirm)
-root.bind("<Control-s>", save_text)
+root.bind("<Control-o>", open_file)
+root.bind("<Control-s>", save_as_text)
 
 # * boilerplate
 
-root.title("Task Logger - " + titlestatus)
 root.mainloop()
