@@ -1,25 +1,28 @@
 from tkinter import *
 from tkinter import ttk as ttk
+from tkinter import filedialog
 import tkinter as tk
 
-# TODO: upload to github repo / store tasks in a dat file / improve ui, fix measurements / need to add settings to mentubar 
+# TODO: store tasks in a dat file / improve ui, fix measurements / need to add settings to mentubar 
 # TODO: remove task feature
 
 # * here the window is defined standard boiler plate
 
 root = tk.Tk()
-root.title("Task Logger")
 root.geometry("495x276")
 
 # * here is the addition of the task in this function
 
+global titlestatus
+titlestatus = "New file"
+
 arr = []
 
-def comfirm():
+def comfirm(e):
     task = taskentry.get()
     taskentry.delete(0, 10000000)
   
-    taskholder.insert(parent="", index="end", iid=len(arr), text="", values=(len(arr), "• " +task))
+    taskholder.insert(parent="", index="end", iid=len(arr), text="", values=(len(arr), "• " + task))
 
     arr.append(task)
 
@@ -45,7 +48,7 @@ taskholder.place(x="0", y="0")
 taskentry = tk.Entry(root, width="61")
 taskentry.place(x="0", y="252")
 
-taskcomfirm = tk.Button(root, command=comfirm, text="add task", width="25", height="1")
+taskcomfirm = tk.Button(root, command=lambda: comfirm(0), text="add task", width="25", height="1")
 taskcomfirm.place(x="270", y="221")
 
 taskremove = tk.Button(root, command=remove, text="remove selected task", width="25", height="1")
@@ -58,13 +61,27 @@ root.config(menu=menubar)
 
 # * menu commands
 
-def save_text():
-    None
+def new_list():
+    for record in taskholder.get_children():
+        taskholder.delete(record)
+        arr.clear()
+        titlestatus = "New file"
+
+def save_text(e):
+    pass
+    
 
 def popup(e):
-    rcmenu.tk_popup(e.x_root, e.y_root)    
+    rcmenu.tk_popup(e.x_root, e.y_root) 
 
-def opendocs():
+def open_file():
+    new_list()
+
+    importedfile = tk.filedialog.askopenfilename(initialdir="~/Documents", title="Open File", filetypes=[("Text Files", "*.txt")])
+    file = importedfile
+    titlestatus = file
+
+def openhelpdocs():
     pass
 
 def keydelete(e):
@@ -74,19 +91,21 @@ def keydelete(e):
 
 # * files 
 
-filemenu = tk.Menu(menubar)
+filemenu = tk.Menu(menubar, tearoff=False)
 menubar.add_cascade(label="file", menu=filemenu)
-filemenu.add_command(label="save as text file", command=save_text)
+filemenu.add_command(label="New list", command=new_list)
+filemenu.add_command(label="Save as text file", command=save_text)
+filemenu.add_command(label="Open text file", command=open_file)
 
 # * help 
 
-helpmenu = tk.Menu(menubar)
+helpmenu = tk.Menu(menubar, tearoff=False)
 menubar.add_cascade(label="help", menu=helpmenu)
-helpmenu.add_command(label="Documentation", command=opendocs)
+helpmenu.add_command(label="Documentation", command=openhelpdocs)
 
 # * settings menu
 
-settingsmenu = tk.Menu(menubar)
+settingsmenu = tk.Menu(menubar, tearoff=False)
 menubar.add_cascade(label="settings", menu=settingsmenu)
 
 # * right click menu
@@ -98,9 +117,11 @@ rcmenu.add_command(label="save as text file", command=save_text)
 
 root.bind("<Delete>", keydelete)
 root.bind("<Button-3>", popup)
-
 root.bind("<BackSpace>", keydelete)
+root.bind("<Return>", comfirm)
+root.bind("<Control-s>", save_text)
 
 # * boilerplate
 
+root.title("Task Logger - " + titlestatus)
 root.mainloop()
